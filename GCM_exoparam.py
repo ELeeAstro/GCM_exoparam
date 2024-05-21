@@ -226,6 +226,6 @@ k_prime = R_bar / cp_bar
 
 print('specific gas constant Rd [J kg-1 K-1]: ', R_bar)
 print('specific gas heat capacity cp [J kg-1 K-1]: ', cp_bar)
-print('adibatic coefficent kappa [-]: ', k_prime)
+print('adiabatic coefficient kappa [-]: ', k_prime)
 
 print('----')
