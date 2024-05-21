@@ -138,18 +138,24 @@ for i in range(nsp):
   f_VMR.append(interpolate.interp2d(lP[:], lT[:], VMR[:,:], kind='linear'))
 
 
-print('T_in [K]: ', T_in)
-print('p_in [bar]: ', p_in )
-print('species and VMR: ')
-
 VMR = np.zeros(nsp)
 for i in range(nsp):
   VMR[i] = 10.0**f_VMR[i](np.log10(p_in),np.log10(T_in))
+
+mu = f_mu[0](np.log10(p_in),np.log10(T_in))
+
+print('----')
+print('T_in [K]: ', T_in)
+print('p_in [bar]: ', p_in )
+print('species and VMR: ')
+for i in range(nsp):
   print(i, sp[i], VMR[i])
 
+
+print('----')
 print('mean molecular weight: ')
-mu = f_mu[0](np.log10(p_in),np.log10(T_in))
 print(mu[0])
+print('----')
 
 # Read in NASA polynomial
 
@@ -218,8 +224,8 @@ cp_bar = cp_bar * 1000.0
 # kappa_prime evaluation
 k_prime = R_bar / cp_bar
 
-print('specific gas constant: ', R_bar)
-print('specific gas heat capacity: ', cp_bar)
-print('adibatic coefficent: ', k_prime)
+print('specific gas constant Rd [J kg-1 K-1]: ', R_bar)
+print('specific gas heat capacity cp [J kg-1 K-1]: ', cp_bar)
+print('adibatic coefficent kappa [-]: ', k_prime)
 
 print('----')
