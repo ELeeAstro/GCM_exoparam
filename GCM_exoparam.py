@@ -1,6 +1,6 @@
 import numpy as np
 import configparser
-from scipy import interpolate
+from scipy.interpolate import RectBivariateSpline
 
 def read_parameters(file_path):
     parameters = {}
@@ -57,11 +57,11 @@ Teff = parameters['Stellar parameters']['Teff']
 # Radius of star
 Rs = parameters['Stellar parameters']['Rs'] * Rsun
 # Semi-Major axis
-a = parameters['Planetary parameters']['a'] * au
+a = parameters['Planetary parameters']['a'] * Rs
 # Mass of planet
-Mp =  parameters['Planetary parameters']['Mp'] * Mj
+Mp =  parameters['Planetary parameters']['Mp'] * Me
 # Radius of planet
-Rp = parameters['Planetary parameters']['Rp'] * Rj
+Rp = parameters['Planetary parameters']['Rp'] * Re
 # Orbital period (days)
 P = parameters['Planetary parameters']['P']  * daysec 
 
@@ -69,6 +69,8 @@ P = parameters['Planetary parameters']['P']  * daysec
 print('Basic values for exoplanet GCMs: ')
 
 print('Radius of planet [m], [R_jup]: ', Rp, Rp/Rj)
+
+print('Semi-major axis [au]: ', a/au)
 
 omega = (2.0 * np.pi)/P
 print('rotation rate (omega) [rad s-1]: ', omega)
@@ -124,7 +126,7 @@ mul = data[:,0]
 mu = np.reshape(mul, (nT, nP))
 # Create a scipy interpolation function for the mean molecular weight
 f_mu = []
-f_mu.append(interpolate.interp2d(lP[:], lT[:], mu[:,:], kind='linear'))
+f_mu.append(RectBivariateSpline(lT[:], lP[:], mu[:,:]))
 
 # VMR interpolator 
 sp = ['OH', 'H2', 'H2O' , 'H',  'CO',  'CO2', 'O', 'CH4', 'C2H2', 'NH3', 'N2', 'HCN', 'He']
@@ -135,7 +137,7 @@ for i in range(nsp):
   VMRl = data[:,1+i]
   VMR = np.log10(np.reshape(VMRl, (nT, nP)))
   # Create a scipy interpolation function for the VMR for each species
-  f_VMR.append(interpolate.interp2d(lP[:], lT[:], VMR[:,:], kind='linear'))
+  f_VMR.append(RectBivariateSpline(lT[:], lP[:], VMR[:,:]))
 
 
 VMR = np.zeros(nsp)

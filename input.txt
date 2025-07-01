@@ -1,14 +1,14 @@
 # Stellar parameters
-Teff = 6460.0
-Rs = 1.458
+Teff = 3650.0
+Rs = 0.5
 
 # Planetary parameters
-Rp = 1.865
-Mp = 1.184
-P = 1.2749255
-a = 0.02544
+Rp = 4.22
+Mp = 11.1
+P = 3.337
+a = 14.05
 
 # Gas
-T = 2358.0
-p = 1.0
-met = 1
+T = 700.0
+p = 0.1
+met = 100
