@@ -57,11 +57,11 @@ Teff = parameters['Stellar parameters']['Teff']
 # Radius of star
 Rs = parameters['Stellar parameters']['Rs'] * Rsun
 # Semi-Major axis
-a = parameters['Planetary parameters']['a'] * Rs
+a = parameters['Planetary parameters']['a'] * au
 # Mass of planet
-Mp =  parameters['Planetary parameters']['Mp'] * Me
+Mp =  parameters['Planetary parameters']['Mp'] * Mj
 # Radius of planet
-Rp = parameters['Planetary parameters']['Rp'] * Re
+Rp = parameters['Planetary parameters']['Rp'] * Rj
 # Orbital period (days)
 P = parameters['Planetary parameters']['P']  * daysec 
 
@@ -140,11 +140,13 @@ for i in range(nsp):
   f_VMR.append(RectBivariateSpline(lT[:], lP[:], VMR[:,:]))
 
 
+print(p_in, T_in)
+
 VMR = np.zeros(nsp)
 for i in range(nsp):
-  VMR[i] = 10.0**f_VMR[i](np.log10(p_in),np.log10(T_in))
+  VMR[i] = 10.0**f_VMR[i](np.log10(T_in),np.log10(p_in))
 
-mu = f_mu[0](np.log10(p_in),np.log10(T_in))
+mu = f_mu[0](np.log10(T_in),np.log10(p_in))
 
 print('----')
 print('T_in [K]: ', T_in)
